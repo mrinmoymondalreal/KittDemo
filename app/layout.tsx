@@ -27,7 +27,7 @@ const Neu = localFont({
       style: "normal",
     },
     {
-      path: "./fonts/PPNeueMontreal-SemiBoldItalic.otf",
+      path: "./fonts/PPNeueMontreal-SemiBolditalic.otf",
       weight: "600",
       style: "italic",
     },
