@@ -1,101 +1,261 @@
-import Image from "next/image";
+"use client";
+
+import SearchCaledar from "@/components/SearchCalendar";
+import SearchDropDown from "@/components/SearchDropDown";
+import { ArrowUpDown, LocateFixed, Search } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+const data = {
+  airports: [
+    {
+      name: "Indira Gandhi International Airport",
+      code: "DEL",
+      city: "New Delhi",
+      country: "India",
+    },
+    {
+      name: "Chhatrapati Shivaji Maharaj International Airport",
+      code: "BOM",
+      city: "Mumbai",
+      country: "India",
+    },
+    {
+      name: "John F. Kennedy International Airport",
+      code: "JFK",
+      city: "New York",
+      country: "United States",
+    },
+    {
+      name: "Dubai International Airport",
+      code: "DXB",
+      city: "Dubai",
+      country: "United Arab Emirates",
+    },
+    {
+      name: "Heathrow Airport",
+      code: "LHR",
+      city: "London",
+      country: "United Kingdom",
+    },
+    {
+      name: "Singapore Changi Airport",
+      code: "SIN",
+      city: "Singapore",
+      country: "Singapore",
+    },
+    {
+      name: "Los Angeles International Airport",
+      code: "LAX",
+      city: "Los Angeles",
+      country: "United States",
+    },
+    {
+      name: "Beijing Capital International Airport",
+      code: "PEK",
+      city: "Beijing",
+      country: "China",
+    },
+    {
+      name: "Sydney Kingsford Smith International Airport",
+      code: "SYD",
+      city: "Sydney",
+      country: "Australia",
+    },
+    {
+      name: "Tokyo Haneda Airport",
+      code: "HND",
+      city: "Tokyo",
+      country: "Japan",
+    },
+  ],
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [formdata, setFormData] = useState({
+    from: "HND",
+    to: "DXB",
+    departure: "23/9/2024",
+    arrival: "31/9/2024",
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  function setInfo(key: string) {
+    return function <T>(info: T) {
+      setFormData((formdata) => ({ ...formdata, [key]: info }));
+    };
+  }
+
+  function handleInterChange() {
+    setFormData((fdata) => ({ ...fdata, from: fdata.to, to: fdata.from }));
+  }
+
+  return (
+    <div className="flex min-h-screen px-[120px]">
+      <div className="relative px-[72px] pt-[106px] w-full space-y-8 h-fit flex flex-col items-center">
+        <svg
+          className="absolute w-fit h-full top-0 right-0 -translate-x-[68px]"
+          viewBox="0 0 1 100"
+          xmlns="http://www.w3.org/2000/svg"
+          id="line"
+        >
+          <line
+            strokeDasharray="2"
+            strokeWidth={0.5}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100"
+            stroke="#E6E8EB"
+          />
+        </svg>
+        <svg
+          className="absolute w-fit h-full top-0 left-0 -translate-y-8 translate-x-[72px]"
+          viewBox="0 0 1 100"
+          xmlns="http://www.w3.org/2000/svg"
+          id="line"
+        >
+          <line
+            strokeDasharray="2"
+            strokeWidth={0.5}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100"
+            stroke="#E6E8EB"
+          />
+        </svg>
+        <h1 className="text-3xl w-fit text-[#000C0B] text-center relative">
+          <svg
+            className="absolute w-fit h-[400px] top-0 left-0 -translate-y-[calc(75%+25px)] -translate-x-6"
+            viewBox="0 0 1 100"
+            xmlns="http://www.w3.org/2000/svg"
+            id="line"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <line
+              strokeDasharray="2"
+              strokeWidth={0.5}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              stroke="#E6E8EB"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </svg>
+          <svg
+            className="absolute w-fit h-[400px] top-0 left-0 -translate-y-[calc(75%+25px)] -translate-x-1"
+            viewBox="0 0 1 100"
+            xmlns="http://www.w3.org/2000/svg"
+            id="line"
           >
-            Read our docs
-          </a>
+            <line
+              strokeDasharray="2"
+              strokeWidth={0.5}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              stroke="#E6E8EB5E"
+            />
+          </svg>
+          <svg
+            className="absolute w-fit h-[400px] top-0 right-0 -translate-y-[calc(75%+25px)] translate-x-1"
+            viewBox="0 0 1 100"
+            xmlns="http://www.w3.org/2000/svg"
+            id="line"
+          >
+            <line
+              strokeDasharray="2"
+              strokeWidth={0.5}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              stroke="#E6E8EB"
+            />
+          </svg>
+          <svg
+            className="absolute w-fit h-[400px] top-0 right-0 -translate-y-[calc(75%+25px)] translate-x-6"
+            viewBox="0 0 1 100"
+            xmlns="http://www.w3.org/2000/svg"
+            id="line"
+          >
+            <line
+              strokeDasharray="2"
+              strokeWidth={0.5}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              stroke="#E6E8EB5E"
+            />
+          </svg>
+          Good afternoon, Brian
+        </h1>
+        <div className="shadow-md rounded-xl w-full min-h-64 border px-7 py-6 space-y-9">
+          <div className="wrapper space-y-6">
+            <div className="heading">
+              <div className="w-32 h-9 bg-[#F5F7FA] rounded-md text-center leading-[36px] font-">
+                Flights
+              </div>
+            </div>
+            <div className="flex gap-x-6 ">
+              <div className="flex flex-1 gap-x-3 items-center">
+                <SearchDropDown
+                  data={data}
+                  setInfo={setInfo("from")}
+                  label="Where from?"
+                  defaultValue={formdata.from}
+                  icon={
+                    <LocateFixed color="#C9CACC" size={20} className="mb-1" />
+                  }
+                />
+                <div
+                  onClick={handleInterChange}
+                  className="bg-[#F5F7FA] w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+                >
+                  <ArrowUpDown size={20} className="rotate-90" />
+                </div>
+                <SearchDropDown
+                  data={data}
+                  setInfo={setInfo("to")}
+                  label="Where to?"
+                  defaultValue={() => formdata.to}
+                  icon={
+                    <LocateFixed color="#C9CACC" size={20} className="mb-1" />
+                  }
+                />
+              </div>
+              <div className="flex gap-x-3 items-center flex-1 h-fit">
+                <SearchCaledar
+                  label="Departure"
+                  setInfo={setInfo("departure")}
+                  defaultValue={formdata.departure}
+                />
+                <SearchCaledar
+                  defaultValue={formdata.arrival}
+                  label="Arrival"
+                  setInfo={setInfo("arrival")}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="footer flex justify-end">
+            <Link
+              href={`/search_flights?${Object.keys(formdata)
+                .map(
+                  (key) =>
+                    `${key}=${encodeURIComponent(formdata[key as keyof typeof formdata])}`
+                )
+                .join("&")}`}
+            >
+              <button className="bg-[rgb(0,62,57)] hover:bg-[#003E39] text-white px-14 py-4 flex gap-x-3 rounded-[7px]">
+                <Search className="mt-1 h-4 w-4" />
+                <div>Search flights</div>
+              </button>
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
